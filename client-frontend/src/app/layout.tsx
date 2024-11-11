@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Ticketly",
-  description: "Ticketly is a ticketing platform.",
+  title: "Conexa test",
+  description: "Conexa test"
 };
 
 export default function RootLayout({
