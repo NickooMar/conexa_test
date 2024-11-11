@@ -1,20 +1,21 @@
 "use client";
 
-import React, { useActionState } from "react";
 import { Link } from "@/i18n/routing";
 import { ActionState } from "@/middleware";
 import { useTranslations } from "next-intl";
+import React, { useActionState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import GoogleIcon from "@mui/icons-material/Google";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { Separator } from "@/components/ui/separator";
 import { AuthProviders } from "@/types/auth/auth.types";
-import { PasswordInput } from "@/components/Auth/PasswordInput";
+import { PasswordInput } from "@/components/Auth/Inputs/PasswordInput";
 import { signIn, signInWithProvider } from "@/app/actions/auth.actions";
 import { BackgroundBeams } from "@/components/Aceternity/BackgroundBeams";
+import { Loader } from "lucide-react";
 
-const SigninPage = () => {
+const SignInForm = () => {
   const t = useTranslations("signin");
 
   const [signInState, signInFormAction, signInPending] = useActionState<
@@ -29,8 +30,8 @@ const SigninPage = () => {
   return (
     <div className="h-screen bg-rose-900 dark:bg-gray-900 flex flex-col items-center justify-center antialiased -z-20">
       <BackgroundBeams />
-      <section className="max-w-xl min-w-32 p-8 z-0 bg-white border border-gray-200 rounded-xl shadow dark:bg-gray-800 dark:border-gray-700">
-        <form className="space-y-5">
+      <section className="w-full max-w-md mx-auto p-4 sm:p-6 md:p-8 z-0 bg-white border border-gray-200 rounded-xl shadow dark:bg-gray-800 dark:border-gray-700">
+        <form action={signInFormAction} className="space-y-5">
           <h3 className="text-center scroll-m-20 text-2xl font-semibold tracking-tight">
             {t("title")}
           </h3>
@@ -69,31 +70,41 @@ const SigninPage = () => {
             <Separator className="w-[35%]" />
           </div>
           <Input
+            id="email"
+            name="email"
+            type="text"
+            required
+            aria-label="email"
             placeholder={t("email.placeholder")}
-            // className={`rounded-xl border border-slate-100 border-opacity-50 ${
-            //   form.formState.errors.email ? "animate-shake" : ""
-            // }`}
           />
-
           <PasswordInput
-          // {...field}
-          // className={`rounded-xl border border-slate-100 border-opacity-50 ${
-          //   form.formState.errors.password ? "animate-shake" : ""
-          // }`}
+            id="password"
+            name="password"
+            required
+            aria-label="password"
+            placeholder={t("password.title")}
+            className="w-full"
           />
-          <div className="flex justify-end">
+          {/* DISABLE RESET PASSWORD FOR NOW */}
+          {/* <div className="flex justify-end">
             <Link
               href="/forgot"
               className="text-sm text-rose-600 hover:underline dark:text-white"
             >
               {t("forgot_password")}
             </Link>
-          </div>
+          </div> */}
+
+          {signInState?.error && (
+            <p className="text-red-500">{signInState.error}</p>
+          )}
+
           <Button
             type="submit"
             className="text-white w-full rounded-xl mt-4 p-4 dark:text-black dark:hover:bg-slate-200"
+            disabled={signInPending}
           >
-            {t("login")}
+            {signInPending ? <Loader /> : <>{t("login")}</>}
           </Button>
           <div className="flex justify-center items-center gap-2">
             <p className="text-sm">{t("not_registered")}</p>
@@ -110,4 +121,4 @@ const SigninPage = () => {
   );
 };
 
-export default SigninPage;
+export default SignInForm;

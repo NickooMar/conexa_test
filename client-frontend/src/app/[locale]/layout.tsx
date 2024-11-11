@@ -3,8 +3,8 @@ import { getMessages } from "next-intl/server";
 import { redirect } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { LocalesKeys } from "@/i18n/types";
-import { ThemeProvider } from "@/components/Theme/themeProvider";
 import Navbar from "@/components/Navbar/Navbar";
+import { ThemeProvider } from "@/components/Theme/themeProvider";
 
 export default async function LocaleLayout({
   children,

@@ -2,6 +2,12 @@
   "general": {
     "loading": "Cargando..."
   },
+  "navbar": {
+    "home": "Inicio",
+    "singin": "Iniciar sesión",
+    "signup": "Registrarse",
+    "signout": "Cerrar sesión"
+  },
   "signin": {
     "title": "Iniciar sesión en tu cuenta",
     "description": "Ingresa la información de tu cuenta a continuación para acceder a la plataforma.",

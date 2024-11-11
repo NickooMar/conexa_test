@@ -1,15 +1,26 @@
-"use client"
+"use client";
 
-import { forwardRef, useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input, InputProps } from "@/components/ui/input"
-import { cn } from "@/lib/utils"
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"
-import VisibilityIcon from "@mui/icons-material/Visibility"
+import { forwardRef, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input, InputProps } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
-const PasswordInput = forwardRef<HTMLInputElement, InputProps>(
+interface PasswordInputProps extends InputProps {
+  id: string;
+  name: string;
+  label?: string;
+  required?: boolean;
+  className?: string;
+  placeholder?: string;
+  autoComplete?: string;
+  "aria-label"?: string;
+}
+
+const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
   ({ className, ...props }, ref) => {
-    const [showPassword, setShowPassword] = useState(false)
+    const [showPassword, setShowPassword] = useState(false);
 
     return (
       <div className="relative">
@@ -34,9 +45,9 @@ const PasswordInput = forwardRef<HTMLInputElement, InputProps>(
           )}
         </Button>
       </div>
-    )
+    );
   }
-)
-PasswordInput.displayName = "PasswordInput"
+);
+PasswordInput.displayName = "PasswordInput";
 
-export { PasswordInput }
+export { PasswordInput };
