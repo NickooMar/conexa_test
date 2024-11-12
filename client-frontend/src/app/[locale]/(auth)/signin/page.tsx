@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 const SigninPage = async () => {
   const session = await auth();
 
-  if (session?.user) redirect("/");
+  if (session) redirect("/");
 
   return <SignInForm />;
 };

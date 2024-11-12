@@ -1,7 +1,9 @@
-import { HttpException, HttpStatus, Inject } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
 import { Microservices } from 'src/types/microservices.types';
+import { SigninRequestDto } from './dto/signin.dto';
+import { SignupRequestDto } from './dto/signup.dto';
 
 export class AuthService {
   constructor(
@@ -9,14 +11,22 @@ export class AuthService {
     private readonly authServiceClient: ClientProxy,
   ) {}
 
-  async login(loginDto: { username: string; password: string }) {
+  async signin(body: SigninRequestDto) {
+    const pattern = { cmd: 'signin' };
+    const response$ = this.authServiceClient.send(pattern, body);
+    const result = await lastValueFrom(response$);
+    return result;
+  }
+
+  async signup(body: SignupRequestDto) {
     try {
-      const pattern = { cmd: 'login' };
-      const response$ = this.authServiceClient.send(pattern, loginDto);
+      const pattern = { cmd: 'signup' };
+      const response$ = this.authServiceClient.send(pattern, body);
       const result = await lastValueFrom(response$);
       return result;
     } catch (error) {
-      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+      console.error(error);
+      throw new Error(error.message);
     }
   }
 }

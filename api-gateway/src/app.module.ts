@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
+import { AppController } from './app.controller';
 import { AuthModule } from './modules/auth/auth.module';
 
 const configModule = ConfigModule.forRoot({

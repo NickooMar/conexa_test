@@ -1,9 +1,7 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './modules/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
-import { HealthModule } from './health/health.module';
+import mongooseMainConfig from './database/mongoose/main.config';
 
 const configModule = ConfigModule.forRoot({
   isGlobal: true,
@@ -11,8 +9,8 @@ const configModule = ConfigModule.forRoot({
 });
 
 @Module({
-  imports: [configModule, AuthModule, HealthModule],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [configModule, mongooseMainConfig, AuthModule],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

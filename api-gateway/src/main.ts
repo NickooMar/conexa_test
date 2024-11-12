@@ -13,8 +13,10 @@ async function bootstrap() {
 
   app.enableCors({ origin: true, credentials: true });
 
+  app.setGlobalPrefix('api');
+
   await app
-    .listen(3000)
+    .listen(port)
     .then(() =>
       Logger.log(`[API GATEWAY] - Listening on port ${port}`, 'Bootstrap'),
     )
