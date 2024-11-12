@@ -12,7 +12,7 @@ export class AuthController {
   async signin(@Res() response: Response, @Body() body: SigninRequestDto) {
     try {
       const result = await this.authService.signin(body);
-      return response.status(HttpStatus.OK).json({ data: result });
+      return response.status(HttpStatus.OK).json(result);
     } catch (error) {
       return response
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -24,7 +24,7 @@ export class AuthController {
   async signup(@Res() response: Response, @Body() body: SignupRequestDto) {
     try {
       const result = await this.authService.signup(body);
-      return response.status(HttpStatus.OK).json({ data: result });
+      return response.status(HttpStatus.OK).json(result);
     } catch (error) {
       return response
         .status(HttpStatus.INTERNAL_SERVER_ERROR)

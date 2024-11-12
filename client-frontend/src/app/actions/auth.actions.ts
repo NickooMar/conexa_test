@@ -10,25 +10,11 @@ export const signIn = validatedAction(
   signInSchema,
   async (data: { email: string; password: string }): Promise<ActionState> => {
     try {
-      const result = await nextAuthSignIn("credentials", {
-        redirect: false,
+      return await nextAuthSignIn("credentials", {
         email: data.email,
         password: data.password,
+        redirect: false,
       });
-
-      console.log({ result });
-
-      return { success: "" };
-
-      // if (!result) {
-      //   return { error: "Authentication failed" };
-      // }
-
-      // if (result.error) {
-      //   return { error: result.error };
-      // }
-
-      // return { success: "" };
     } catch (error) {
       console.error("Sign in error:", error);
       return { error: "An unexpected error occurred" };

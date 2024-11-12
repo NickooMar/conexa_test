@@ -1,9 +1,12 @@
 import { Module } from '@nestjs/common';
-import { AuthModule } from './modules/auth/auth.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
-import mongooseMainConfig from './database/mongoose/main.config';
-import { JwtModule } from '@nestjs/jwt';
 import { config } from './config';
+import { JwtModule } from '@nestjs/jwt';
+import { ScheduleModule } from '@nestjs/schedule';
+import { MoviesModule } from './modules/movies/movies.module';
+import mongooseMainConfig from './database/mongoose/main.config';
 
 const { jsonWebTokenConfig } = config;
 
@@ -14,16 +17,17 @@ const configModule = ConfigModule.forRoot({
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     JwtModule.register({
       global: true,
       secret: jsonWebTokenConfig.secret,
       signOptions: { expiresIn: jsonWebTokenConfig.expiresIn },
     }),
-    configModule,
     mongooseMainConfig,
-    AuthModule,
+    configModule,
+    MoviesModule,
   ],
-  controllers: [],
-  providers: [],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

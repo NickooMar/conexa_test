@@ -1,8 +1,24 @@
-import NextAuth from "next-auth";
+import axios from "axios";
+import { JWT } from "next-auth/jwt";
 import Google from "next-auth/providers/google";
 import GitHub from "next-auth/providers/github";
+import { jwtDecode } from "jwt-decode";
+import NextAuth, { DefaultSession, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import axios from "axios";
+
+interface AuthUser extends User {
+  accessToken?: string;
+  username?: string;
+}
+
+interface CustomSession extends DefaultSession {
+  accessToken?: string;
+  user: {
+    id: string;
+    email: string;
+    name: string;
+  } & DefaultSession["user"];
+}
 
 const $axios = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -13,52 +29,75 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     Google,
     GitHub,
     CredentialsProvider({
-      name: "credentials", // lowercase is important
+      name: "credentials",
       credentials: {
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials) {
+      async authorize(credentials): Promise<AuthUser | null> {
         try {
           if (!credentials?.email || !credentials?.password) {
             return null;
           }
 
-          const response = await $axios.post("api/auth/signin", {
+          const { data } = await $axios.post("api/auth/signin", {
             email: credentials.email,
             password: credentials.password,
           });
 
-          console.log({ response });
+          if (!data) throw new Error("Invalid credentials");
 
-          if (response.data) {
-            // Return a user object that NextAuth can use
-            return {
-              id: response.data.id,
-              email: credentials.email,
-              name: response.data.name || credentials.email,
-              // Include any other user data you need
-            };
-          }
+          const access: any = jwtDecode(data.accessToken);
 
-          return null;
+          return {
+            id: access.id,
+            email: access.email,
+            name: access.username,
+            accessToken: data.accessToken,
+          };
         } catch (error) {
-          console.error("Authorization error:", error);
-          return null;
+          throw new Error(`Failed to sign in: ${error}`);
         }
       },
     }),
   ],
   callbacks: {
-    async signIn({ user, account, profile }) {
-      // TODO: Handle sign in by provider callback
-      console.log({ user, account, profile });
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.email = user.email;
+        token.name = user.name;
+        token.accessToken = (user as AuthUser).accessToken;
+      }
+      return token;
+    },
+    async session({ session, token }): Promise<CustomSession> {
+      if (token) {
+        (session as CustomSession).accessToken = token.accessToken as string;
+        session.user = {
+          ...session.user,
+          id: token.id as string,
+          email: token.email as string,
+          name: token.name as string,
+        };
+      }
+      return session as CustomSession;
+    },
+    async signIn({ account }) {
+      // Simplified signIn callback
+      if (!account) return false;
 
-      return true;
+      if (account.type === "credentials") {
+        return true;
+      }
+
+      if (account.provider === "google" || account.provider === "github") {
+        return true;
+      }
+
+      return false;
     },
   },
-  pages: {
-    signIn: "/signin",
-    error: "/error",
-  },
+  secret: process.env.AUTH_SECRET,
+  session: { strategy: "jwt" },
 });
