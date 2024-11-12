@@ -1,6 +1,13 @@
 import 'dotenv/config';
 
 class Config {
+  get jsonWebTokenConfig() {
+    return {
+      secret: this.getEnv('JWT_SECRET'),
+      expiresIn: this.getEnv('JWT_EXPIRES_IN'),
+    };
+  }
+
   get mongooseConfig() {
     return {
       host: this.getEnv('MONGO_HOST'),

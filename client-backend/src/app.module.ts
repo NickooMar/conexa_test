@@ -7,6 +7,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ScheduleModule } from '@nestjs/schedule';
 import { MoviesModule } from './modules/movies/movies.module';
 import mongooseMainConfig from './database/mongoose/main.config';
+import { CacheModule } from '@nestjs/cache-manager';
 
 const { jsonWebTokenConfig } = config;
 
@@ -22,6 +23,12 @@ const configModule = ConfigModule.forRoot({
       secret: jsonWebTokenConfig.secret,
       signOptions: { expiresIn: jsonWebTokenConfig.expiresIn },
     }),
+    CacheModule.register({
+      ttl: 10000, // Cache expiration time in milliseconds
+      max: 20, // Maximum number of items in cache
+      isGlobal: true,
+    }),
+    CacheModule.register(),
     ScheduleModule.forRoot(),
     mongooseMainConfig,
     configModule,

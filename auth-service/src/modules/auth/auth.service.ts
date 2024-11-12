@@ -35,9 +35,6 @@ export class AuthService {
     };
 
     return {
-      userId: user._id,
-      userEmail: user.email,
-      username: user.username,
       accessToken: await this.jwtService.signAsync(jwtPayload),
     };
   }
@@ -64,7 +61,13 @@ export class AuthService {
       username,
       password: hashedPassword,
     });
+    await newUser.save();
 
-    return await newUser.save();
+    return {
+      role: newUser.role,
+      userId: newUser._id,
+      userEmail: newUser.email,
+      username: newUser.username,
+    };
   }
 }

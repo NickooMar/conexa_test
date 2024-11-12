@@ -1,34 +1,34 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Inject, UseFilters } from '@nestjs/common';
 import { MoviesService } from './movies.service';
-import { CreateMovieDto } from './dto/create-movie.dto';
-import { UpdateMovieDto } from './dto/update-movie.dto';
+import { MessagePattern, Payload } from '@nestjs/microservices';
+import { ExceptionFilter } from 'src/exceptions/rpc-exception.filter';
+import { Cache, CACHE_MANAGER } from '@nestjs/cache-manager';
+import { GetMoviesRequestDto } from './dto/get-movies.dto';
 
 @Controller('movies')
 export class MoviesController {
-  constructor(private readonly moviesService: MoviesService) {}
+  constructor(
+    private readonly moviesService: MoviesService,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+  ) {}
 
-  @Post()
-  create(@Body() createMovieDto: CreateMovieDto) {
-    return this.moviesService.create(createMovieDto);
-  }
+  @MessagePattern({ cmd: 'getMovies' })
+  @UseFilters(new ExceptionFilter())
+  async getMovies(@Payload() payload: GetMoviesRequestDto) {
+    const { revalidate } = payload;
 
-  @Get()
-  findAll() {
-    return this.moviesService.findAll();
-  }
+    const cacheKey = `movies_getMovies`;
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.moviesService.findOne(+id);
-  }
+    // Revalidate checks if the cache should be revalidated
+    if (!revalidate) {
+      const cachedResult = await this.cacheManager.get(cacheKey);
+      if (cachedResult) return cachedResult;
+    }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMovieDto: UpdateMovieDto) {
-    return this.moviesService.update(+id, updateMovieDto);
-  }
+    const movies = await this.moviesService.getMovies();
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.moviesService.remove(+id);
+    await this.cacheManager.set(cacheKey, movies, 60000); // 1 minute
+
+    return movies;
   }
 }

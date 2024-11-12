@@ -6,6 +6,7 @@ import { Model } from 'mongoose';
 import axios from 'axios';
 import { Movie } from 'src/modules/movies/schemas/movie.schema';
 import { config } from 'src/config';
+import { SWAPIMoviesResponse } from 'src/modules/movies/types/movies.types';
 
 const { mongooseConfig } = config;
 
@@ -24,7 +25,9 @@ export class MoviesTask {
 
     try {
       // Fetch movie data from the Star Wars API
-      const response = await axios.get('https://swapi.dev/api/films');
+      const response = await axios.get<SWAPIMoviesResponse>(
+        'https://swapi.dev/api/films',
+      );
       const movies = response.data.results;
 
       const bulkOps = movies.map((movie) => ({

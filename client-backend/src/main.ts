@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { Transport, MicroserviceOptions } from '@nestjs/microservices';
 import * as dotenv from 'dotenv';
 import { ConfigService } from '@nestjs/config';
@@ -14,6 +14,8 @@ async function bootstrap() {
   const port = configService.get<number>('CLIENT_BACKEND_PORT', 3002);
   const httpPort = configService.get<number>('CLIENT_BACKEND_HTTP_PORT', 3003);
   const host = configService.get<string>('CLIENT_BACKEND_HOST', 'localhost');
+
+  app.useGlobalPipes(new ValidationPipe());
 
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.TCP,
