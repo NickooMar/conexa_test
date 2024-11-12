@@ -17,12 +17,12 @@ const configModule = ConfigModule.forRoot({
 
 @Module({
   imports: [
-    ScheduleModule.forRoot(),
     JwtModule.register({
       global: true,
       secret: jsonWebTokenConfig.secret,
       signOptions: { expiresIn: jsonWebTokenConfig.expiresIn },
     }),
+    ScheduleModule.forRoot(),
     mongooseMainConfig,
     configModule,
     MoviesModule,

@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { createSwaggerApiDocs } from './swagger-api';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,6 +15,8 @@ async function bootstrap() {
   app.enableCors({ origin: true, credentials: true });
 
   app.setGlobalPrefix('api');
+
+  createSwaggerApiDocs(app);
 
   await app
     .listen(port)

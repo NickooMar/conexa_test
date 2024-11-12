@@ -4,6 +4,7 @@ import { Logger } from '@nestjs/common';
 import { Transport, MicroserviceOptions } from '@nestjs/microservices';
 import * as dotenv from 'dotenv';
 import { ConfigService } from '@nestjs/config';
+import { createAsyncapiDocs } from './async-api';
 
 dotenv.config();
 
@@ -13,6 +14,8 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   const port = configService.get<number>('AUTH_SERVICE_PORT', 3001);
   const host = configService.get<string>('AUTH_SERVICE_HOST', 'localhost');
+
+  await createAsyncapiDocs(app);
 
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.TCP,
