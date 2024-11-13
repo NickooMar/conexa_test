@@ -4,10 +4,10 @@ import {
   ExecutionContext,
   UnauthorizedException,
 } from '@nestjs/common';
-import { config } from 'src/config';
+import { config } from '../../config';
 import { JwtService } from '@nestjs/jwt';
 import { ExtendedRequest } from './types/request.types';
-import { UserRole } from 'src/modules/auth/schemas/user.schema';
+import { UserRole } from '../../modules/auth/schemas/user.schema';
 import { IS_PUBLIC_KEY } from '../decorators/auth.decorator';
 import { Reflector } from '@nestjs/core';
 

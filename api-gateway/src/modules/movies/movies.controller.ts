@@ -1,9 +1,9 @@
 import { Response } from 'express';
 import { MoviesService } from './movies.service';
 import { UserRole } from '../auth/schemas/user.schema';
-import { AuthGuard } from 'src/common/guards/auth.guard';
-import { RolesGuard } from 'src/common/guards/roles.guard';
-import { Roles } from 'src/common/decorators/roles.decorator';
+import { AuthGuard } from '../../common/guards/auth.guard';
+import { RolesGuard } from '../../common/guards/roles.guard';
+import { Roles } from '../../common/decorators/roles.decorator';
 import {
   Get,
   Controller,

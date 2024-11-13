@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
-import { Microservices } from 'src/types/microservices.types';
+import { Microservices } from '../../types/microservices.types';
 import { CreateMovieRequestDto } from './dto/create-movie.dto';
 import { UpdateMovieRequestDto } from './dto/update-movie.dto';
 

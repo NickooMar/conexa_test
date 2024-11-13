@@ -3,7 +3,7 @@ import { MoviesService } from './movies.service';
 import { MoviesController } from './movies.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { Microservices } from 'src/types/microservices.types';
+import { Microservices } from '../../types/microservices.types';
 
 @Module({
   imports: [

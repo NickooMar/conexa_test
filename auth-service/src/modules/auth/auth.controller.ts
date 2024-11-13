@@ -1,5 +1,5 @@
 import { Controller, UseFilters } from '@nestjs/common';
-import { MessagePattern, Payload } from '@nestjs/microservices';
+import { MessagePattern, Payload, RpcException } from '@nestjs/microservices';
 import { AuthService } from './auth.service';
 import { SigninRequestDto } from './dto/signin.dto';
 import { SignupRequestDto } from './dto/signup.dto';
@@ -21,7 +21,11 @@ export class AuthController {
     },
   })
   async handleSignin(@Payload() data: SigninRequestDto) {
-    return await this.authService.singin(data);
+    try {
+      return await this.authService.singin(data);
+    } catch (error) {
+      throw new RpcException(error.message);
+    }
   }
 
   @MessagePattern({ cmd: 'signup' })
@@ -35,6 +39,10 @@ export class AuthController {
     },
   })
   async handleSignup(@Payload() data: SignupRequestDto) {
-    return await this.authService.signup(data);
+    try {
+      return await this.authService.signup(data);
+    } catch (error) {
+      throw new RpcException(error.message);
+    }
   }
 }

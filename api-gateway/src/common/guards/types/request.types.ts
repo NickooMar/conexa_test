@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { UserRole } from 'src/modules/auth/schemas/user.schema';
+import { UserRole } from '../../../modules/auth/schemas/user.schema';
 
 export type ExtendedRequest = Request & {
   user?: {

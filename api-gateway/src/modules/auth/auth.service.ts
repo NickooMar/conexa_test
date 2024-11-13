@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
-import { Microservices } from 'src/types/microservices.types';
+import { Microservices } from '../../types/microservices.types';
 import { SigninRequestDto } from './dto/signin.dto';
 import { SignupRequestDto } from './dto/signup.dto';
 

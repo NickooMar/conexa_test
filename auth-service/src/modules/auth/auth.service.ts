@@ -22,11 +22,11 @@ export class AuthService {
 
     const user = await this.userModel.findOne({ email }).exec();
 
-    if (!user) throw new RpcException('user_not_found');
+    if (!user) throw new RpcException('invalid_credentials');
 
     const passwordMatch = await bcrypt.compare(password, user.password);
 
-    if (!passwordMatch) throw new RpcException('invalid_password');
+    if (!passwordMatch) throw new RpcException('invalid_credentials');
 
     const jwtPayload = {
       sub: user._id,
@@ -52,7 +52,7 @@ export class AuthService {
       })
       .exec();
 
-    if (existingUser) throw new RpcException('User already exists');
+    if (existingUser) throw new RpcException('user_already_exists');
 
     const hashedPassword = await bcrypt.hash(user.password, 10);
 

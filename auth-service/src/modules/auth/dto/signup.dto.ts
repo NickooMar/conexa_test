@@ -1,11 +1,13 @@
 import {
-  IsNotEmpty,
-  IsString,
-  MinLength,
   Validate,
+  IsString,
+  MaxLength,
+  MinLength,
+  IsNotEmpty,
   ValidationArguments,
   ValidatorConstraint,
   ValidatorConstraintInterface,
+  IsEmail,
 } from 'class-validator';
 
 @ValidatorConstraint({ name: 'CustomMatchPasswords', async: false })
@@ -21,24 +23,29 @@ export class CustomMatchPasswords implements ValidatorConstraintInterface {
 }
 
 export class SignupRequestDto {
-  @IsNotEmpty()
+  @IsEmail()
   @IsString()
+  @IsNotEmpty()
   @MinLength(6)
+  @MaxLength(50)
   email: string;
 
-  @IsNotEmpty()
   @IsString()
+  @IsNotEmpty()
   @MinLength(4)
+  @MaxLength(25)
   username: string;
 
-  @IsNotEmpty()
   @IsString()
+  @IsNotEmpty()
   @MinLength(8)
+  @MaxLength(20)
   password: string;
 
-  @IsNotEmpty()
   @IsString()
+  @IsNotEmpty()
   @MinLength(8)
+  @MaxLength(20)
   @Validate(CustomMatchPasswords, ['password'])
   confirmPassword: string;
 }

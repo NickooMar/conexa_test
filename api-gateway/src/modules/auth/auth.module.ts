@@ -3,7 +3,7 @@ import { AuthController } from './auth.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AuthService } from './auth.service';
-import { Microservices } from 'src/types/microservices.types';
+import { Microservices } from '../../types/microservices.types';
 
 @Module({
   imports: [
