@@ -1,6 +1,15 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-cd ./api-gateway && npx oxlint@latest && npm run test && npm run build
-cd ./auth-service && npx oxlint@latest && npm run test && npm run build
-cd ./user-service && npx oxlint@latest && npm run test && npm run build
+# Check if directories exist before running commands
+if [ -d "./api-gateway" ]; then
+  cd ./api-gateway && npx oxlint@latest && npm run test && npm run build && cd ..
+fi
+
+if [ -d "./auth-service" ]; then
+  cd ./auth-service && npx oxlint@latest && npm run test && npm run build && cd ..
+fi 
+
+if [ -d "./client-backend" ]; then
+  cd ./client-backend && npx oxlint@latest && npm run test && npm run build && cd ..
+fi
