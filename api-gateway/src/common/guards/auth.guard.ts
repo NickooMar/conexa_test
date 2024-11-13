@@ -48,7 +48,7 @@ export class AuthGuard implements CanActivate {
       request.user = payload;
 
       return true;
-    } catch (error) {
+    } catch {
       throw new UnauthorizedException('Unauthorized');
     }
   }
@@ -82,7 +82,7 @@ export class AuthGuard implements CanActivate {
       }
 
       return payload;
-    } catch (err) {
+    } catch {
       throw new UnauthorizedException('Invalid token');
     }
   }

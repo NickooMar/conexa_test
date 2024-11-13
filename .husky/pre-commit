@@ -1,0 +1,6 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+cd ./api-gateway && npx oxlint@latest && npm run test && npm run build
+cd ./auth-service && npx oxlint@latest && npm run test && npm run build
+cd ./user-service && npx oxlint@latest && npm run test && npm run build
