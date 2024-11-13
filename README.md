@@ -21,14 +21,80 @@ El backend permite gestionar películas de Star Wars e incluye:
     Swagger: Para documentar la API.
     TypeORM: Para la interacción con la base de datos (PostgreSQL).
     Jest: Para las pruebas unitarias.
-## Installation
+## Getting Started
 
-Install my-project with npm
+Guía de instalación del proyecto.
+
+Listado de paquetes necesarios para correr el proyecto.
+
+- npm
 
 ```bash
-  npm install my-project
-  cd my-project
+  npm install npm@latest -g
 ```
+
+## Installation
+
+Clonar el repositorio completo.
+```bash
+git clone https://github.com/NickooMar/conexa_test.git
+```
+
+Setear las variables de entorno con valores locales - (Las variables se encuentran en los archivos `.env.example` de cada servicio).
+
+### API - Gateway
+
+1. Ingresar en la carpeta.
+```bash 
+cd api-gateway
+```
+2. Crear un archivo `.env` en la raiz de la carpeta `api-gateway` .
+2. Configurar las variables de entorno en el archivo previamente creado de acuerdo al archivo `.env.example`.
+2. Instalar los modulos necesarios.
+```bash
+npm install
+```
+3. Ejecutar el servicio
+```bash
+npm run start:dev
+```
+4. Finalmente el servicio estará en funcionamiento
+
+### Auth Service
+
+1. Ingresar en la carpeta.
+```bash 
+cd auth-service
+```
+2. Crear un archivo `.env` en la raiz de la carpeta `auth-service` .
+2. Configurar las variables de entorno en el archivo previamente creado.
+2. Instalar los modulos necesarios.
+```bash
+npm install
+```
+3. Ejecutar el servicio
+```bash
+npm run start:dev
+```
+
+
+### Client Backend
+
+1. Ingresar en la carpeta.
+```bash 
+cd client-backend
+```
+2. Crear un archivo `.env` en la raiz de la carpeta `client-backend` .
+2. Configurar las variables de entorno en el archivo previamente creado.
+2. Instalar los modulos necesarios.
+```bash
+npm install
+```
+3. Ejecutar el servicio
+```bash
+npm run start:dev
+```
+
     
 ## API Reference
 
