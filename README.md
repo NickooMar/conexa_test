@@ -21,7 +21,7 @@ El backend permite gestionar películas de Star Wars e incluye:
     Swagger: Para documentar la API.
     TypeORM: Para la interacción con la base de datos (PostgreSQL).
     Jest: Para las pruebas unitarias.
-## Getting Started
+## Guía de instalación
 
 Guía de instalación del proyecto.
 
@@ -33,7 +33,7 @@ Listado de paquetes necesarios para correr el proyecto.
   npm install npm@latest -g
 ```
 
-## Installation
+## Instalación
 
 Clonar el repositorio completo.
 ```bash
@@ -104,6 +104,8 @@ npm run start:dev
 
     
 ## API Reference
+
+La documentación de la API del proyecto se genera con Swagger y se puede encontrar en la carpeta `api-gateway` en la ruta `/api-docs`. Esta documentación utiliza un archivo swagger.yaml que define los endpoints, esquemas y otros detalles importantes de la API.
 
 
 #### Post Signup
@@ -217,7 +219,7 @@ npm run start:dev
 | `api_key` | `string` | **Required**. Your API key |
 | `id` | `string` | **Required**. Id of the item to fetch |
 
-## Authors
+## Autor
 
 - [@NickooMar](https://github.com/NickooMar)
 
