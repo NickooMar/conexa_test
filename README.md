@@ -46,6 +46,7 @@ Setear las variables de entorno con valores locales - (Las variables se encuentr
 Es necesario tener MongoDB instalado y en funcionamiento. Este proyecto requiere de 2 (dos) colecciones en la base de datos
 
 `movies`: Para almacenar la información de las películas.
+
 `users`: Para almacenar la información de los usuarios registrados.
 
 ### API - Gateway
