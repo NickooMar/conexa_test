@@ -64,11 +64,19 @@ export class AuthService {
     });
     await newUser.save();
 
+    const jwtPayload = {
+      sub: newUser._id,
+      role: newUser.role,
+      email: newUser.email,
+      username: newUser.username,
+    };
+
     return {
       role: newUser.role,
       userId: newUser._id,
       userEmail: newUser.email,
       username: newUser.username,
+      accessToken: await this.jwtService.signAsync(jwtPayload),
     };
   }
 }
