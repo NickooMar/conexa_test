@@ -7,23 +7,39 @@ import {
 import { config } from 'src/config';
 import { JwtService } from '@nestjs/jwt';
 import { ExtendedRequest } from './types/request.types';
+import { UserRole } from 'src/modules/auth/schemas/user.schema';
+import { IS_PUBLIC_KEY } from '../decorators/auth.decorator';
+import { Reflector } from '@nestjs/core';
 
 const { jsonWebTokenConfig } = config;
 
 interface DecodedToken {
   sub: string;
-  email: string;
-  username: string;
   iat: number;
   exp: number;
+  email: string;
+  role: UserRole;
+  username: string;
 }
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private jwtService: JwtService) {}
+  constructor(
+    private reflector: Reflector,
+    private jwtService: JwtService,
+  ) {}
 
-  async canActivate(context: ExecutionContext): Promise<boolean> {
+  canActivate(context: ExecutionContext): boolean {
     try {
+      const isPublic = this.reflector.getAllAndOverride<boolean>(
+        IS_PUBLIC_KEY,
+        [context.getHandler(), context.getClass()],
+      );
+
+      if (isPublic) {
+        return true;
+      }
+
       const request = context.switchToHttp().getRequest<ExtendedRequest>();
       const token = this.extractToken(request);
       const payload = this.verifyToken(token);

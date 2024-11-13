@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AuthModule } from './modules/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
-import mongooseMainConfig from './database/mongoose/main.config';
+import MongooseMainConfig from './database/mongoose/main.config';
 import { JwtModule } from '@nestjs/jwt';
 import { config } from './config';
 
@@ -20,7 +20,7 @@ const configModule = ConfigModule.forRoot({
       signOptions: { expiresIn: jsonWebTokenConfig.expiresIn },
     }),
     configModule,
-    mongooseMainConfig,
+    MongooseMainConfig,
     AuthModule,
   ],
   controllers: [],

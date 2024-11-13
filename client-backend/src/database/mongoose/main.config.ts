@@ -3,7 +3,7 @@ import { config } from 'src/config';
 
 const { host, port, database, ssl } = config.mongooseConfig;
 
-const mongooseMainConfig = MongooseModule.forRoot(
+const MongooseMainConfig = MongooseModule.forRoot(
   `mongodb://${host}:${port}/${database}?ssl=${ssl}`,
   {
     dbName: database,
@@ -11,4 +11,4 @@ const mongooseMainConfig = MongooseModule.forRoot(
   },
 );
 
-export default mongooseMainConfig;
+export default MongooseMainConfig;

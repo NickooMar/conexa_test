@@ -1,14 +1,18 @@
-import { Get, Controller, Res, HttpStatus, UseGuards } from '@nestjs/common';
-import { MoviesService } from './movies.service';
 import { Response } from 'express';
+import { MoviesService } from './movies.service';
+import { UserRole } from '../auth/schemas/user.schema';
 import { AuthGuard } from 'src/common/guards/auth.guard';
+import { RolesGuard } from 'src/common/guards/roles.guard';
+import { Roles } from 'src/common/decorators/roles.decorator';
+import { Get, Controller, Res, HttpStatus, UseGuards } from '@nestjs/common';
 
 @Controller('movies')
-@UseGuards(AuthGuard)
+@UseGuards(AuthGuard, RolesGuard)
 export class MoviesController {
   constructor(private readonly moviesService: MoviesService) {}
 
   @Get()
+  @Roles([UserRole.REGULAR, UserRole.ADMIN])
   async findAll(@Res() response: Response) {
     try {
       const result = await this.moviesService.findAll();

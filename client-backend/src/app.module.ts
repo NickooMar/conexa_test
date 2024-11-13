@@ -6,7 +6,7 @@ import { config } from './config';
 import { JwtModule } from '@nestjs/jwt';
 import { ScheduleModule } from '@nestjs/schedule';
 import { MoviesModule } from './modules/movies/movies.module';
-import mongooseMainConfig from './database/mongoose/main.config';
+import MongooseMainConfig from './database/mongoose/main.config';
 import { CacheModule } from '@nestjs/cache-manager';
 
 const { jsonWebTokenConfig } = config;
@@ -30,7 +30,7 @@ const configModule = ConfigModule.forRoot({
     }),
     CacheModule.register(),
     ScheduleModule.forRoot(),
-    mongooseMainConfig,
+    MongooseMainConfig,
     configModule,
     MoviesModule,
   ],
