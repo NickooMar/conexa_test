@@ -33,7 +33,8 @@
     "dotenv": "^16.4.5",
     "mongoose": "^8.8.1",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",

@@ -1,0 +1,62 @@
+version: "3.8"
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: conexa_mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 12345678
+      MONGO_INITDB_DATABASE: conexa
+    command:
+      - '--logpath'
+      - '/var/log/mongodb/mongod.log'
+    ports:
+      - 27017:27017
+    volumes:
+      - ./docker/mongodb_data:/data/db
+      - ./docker/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+      args:
+        - SERVICE_NAME=api-gateway
+        - PORT=3000
+    depends_on:
+      - mongodb
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+
+  client-backend:
+    build:
+      context: ./client-backend
+      dockerfile: Dockerfile
+      args:
+        - SERVICE_NAME=client-backend
+        - CLIENT_BACKEND_TCP_PORT=3002
+        - CLIENT_BACKEND_HTTP_PORT=3003
+    depends_on:
+      - mongodb
+    ports:
+      - "3003:3003"
+    environment:
+        - CLIENT_BACKEND_TCP_PORT=3002
+        - CLIENT_BACKEND_HTTP_PORT=3003
+
+  auth:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+      args:
+        - SERVICE_NAME=auth-service
+        - PORT=3001
+    depends_on:
+      - mongodb
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
