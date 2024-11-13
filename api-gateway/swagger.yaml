@@ -1,0 +1,325 @@
+openapi: "3.0.0"
+info:
+  title: "Conexa API Gateway"
+  description: "API Gateway to handle microservices request"
+  version: "1.0.0"
+
+paths:
+  /api/auth/signin:
+    post:
+      tags:
+        - Authentication
+      summary: "Sign in user"
+      description: "Authenticates a user with email and password"
+      operation: "signin"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  minLength: 6
+                  example: "user@example.com"
+                password:
+                  type: string
+                  minLength: 8
+                  example: "password123"
+              required:
+                - email
+                - password
+      responses:
+        "200":
+          description: "User successfully authenticated"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        "401":
+          description: "Unauthorized"
+        "500":
+          description: "Internal server error"
+
+  /api/auth/signup:
+    post:
+      tags:
+        - Authentication
+      summary: "Sign up user"
+      description: "Register a user"
+      operation: "signiup"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  minLength: 6
+                  example: "user@example.com"
+                username:
+                  type: string
+                  format: email
+                  minLength: 6
+                  example: "user"
+                password:
+                  type: string
+                  minLength: 8
+                  example: "password123"
+                confirmPassword:
+                  type: string
+                  minLength: 8
+                  example: "password123"
+              required:
+                - email
+                - password
+                - confirmPassword
+                - username
+      responses:
+        "200":
+          description: "User successfully Created"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  userId:
+                    type: string
+                    example: "67348ad805e46473e4421c38"
+                  role:
+                    type: string
+                    example: "regular"
+                  userEmail:
+                    type: string
+                    example: "test@test.com"
+                  username:
+                    type: string
+                    example: "test"
+                  accessToken:
+                    type: string
+                    example: "eyJhbGciOi"
+        "401":
+          description: "Unauthorized"
+        "500":
+          description: "Internal server error"
+
+  /api/movies:
+    get:
+      tags:
+        - Movies
+      summary: "Get all movies"
+      description: "Get all movies"
+      operation: "getMovies"
+      headers:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: "Bearer <token>"
+      responses:
+        "200":
+          description: "Returns all movies"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Movie"
+        "401":
+          description: "Unauthorized"
+        "500":
+          description: "Internal server error"
+
+  /api/movies/{id}:
+    get:
+      tags:
+        - Movies
+      summary: "Get movie by ID"
+      description: "Get a specific movie by its ID"
+      operation: "getMovie"
+      headers:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: "Bearer <token>"
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: "Movie ID"
+      responses:
+        "200":
+          description: "Returns one movie"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Movie"
+        "401":
+          description: "Unauthorized"
+        "500":
+          description: "Internal server error"
+
+  /api/movies/{___id}:
+    patch:
+      tags:
+        - Movies
+      summary: "Create movie"
+      description: "Creates a movie based on the request body and S"
+      operation: "updateMovie"
+      headers:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: "Bearer <token>"
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: "Movie ID"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Movie"
+      responses:
+        "200":
+          description: "Returns the updated movie"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Movie"
+        "401":
+          description: "Unauthorized"
+        "500":
+          description: "Internal server error"
+
+  /api/movies/{_id}:
+    patch:
+      tags:
+        - Movies
+      summary: "Update a movie by id"
+      description: "Update a specific movie based on id"
+      operation: "updateMovie"
+      headers:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: "Bearer <token>"
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: "Movie ID"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Movie"
+      responses:
+        "200":
+          description: "Returns the updated movie"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Movie"
+        "401":
+          description: "Unauthorized"
+        "500":
+          description: "Internal server error"
+
+  /api/movies/{__id}:
+    delete:
+      tags:
+        - Movies
+      summary: "Delete a movie by id"
+      description: "Delete a specific movie based on id"
+      operation: "deleteMovie"
+      headers:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: "Bearer <token>"
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: "Movie ID"
+      responses:
+        "200":
+          description: "Returns the deleted movie"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Movie"
+        "401":
+          description: "Unauthorized"
+        "500":
+          description: "Internal server error"
+
+components:
+  schemas:
+    Movie:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "6733d21bdb3873d37c1c6ea7"
+        episode_id:
+          type: integer
+          example: 4
+        title:
+          type: string
+          example: "A New Hope"
+        opening_crawl:
+          type: string
+          example: "It is a period of civil war..."
+        director:
+          type: string
+          example: "George Lucas"
+        characters:
+          type: array
+          items:
+            type: string
+            example: "https://swapi.dev/api/people/1/"
+        planets:
+          type: array
+          items:
+            type: string
+        starships:
+          type: array
+          items:
+            type: string
+# components:
+#   securitySchemes:
+#     bearerAuth:
+#       type: http
+#       scheme: bearer
+#       bearerFormat: JWT
