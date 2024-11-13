@@ -8,7 +8,7 @@ export class Movie extends Document {
   @Prop({ required: true, unique: true })
   title: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true, unique: true })
   episode_id: number;
 
   @Prop({ required: true })
@@ -38,7 +38,7 @@ export class Movie extends Document {
   @Prop({ type: [String] })
   species: string[];
 
-  @Prop({ required: true })
+  @Prop({ required: true, default: Date.now })
   created: Date;
 
   @Prop({ required: true })

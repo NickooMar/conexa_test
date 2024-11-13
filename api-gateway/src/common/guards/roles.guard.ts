@@ -8,6 +8,7 @@ import { Reflector } from '@nestjs/core';
 import { ROLES_KEY } from '../decorators/roles.decorator';
 import { ExtendedRequest } from './types/request.types';
 import { IS_PUBLIC_KEY } from '../decorators/auth.decorator';
+import { UserRole } from 'src/modules/auth/schemas/user.schema';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -33,23 +34,17 @@ export class RolesGuard implements CanActivate {
       context.getClass(),
     ]);
 
+    // No roles are required, allow access
     if (!requiredRoles) {
-      // No roles are required, allow access
       return true;
     }
 
-    // const userRole = await this.userModel
-    //   .findById(user.sub)
-    //   .select('role')
-    //   .exec();
+    // Match roles between required and user roles
+    const hasRole = requiredRoles.some((role: UserRole) =>
+      user.role.includes(role),
+    );
 
-    // console.log({ userRole });
-
-    // // Match roles between required and user roles
-    // const hasRole = requiredRoles.some((role) => user.roles.includes(role));
-    // if (!hasRole) {
-    //   throw new UnauthorizedException('Insufficient permissions');
-    // }
+    if (!hasRole) throw new UnauthorizedException('Insufficient permissions');
 
     return true;
   }

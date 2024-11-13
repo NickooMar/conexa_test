@@ -13,7 +13,7 @@ import { Reflector } from '@nestjs/core';
 
 const { jsonWebTokenConfig } = config;
 
-interface DecodedToken {
+export interface DecodedToken {
   sub: string;
   iat: number;
   exp: number;
@@ -44,7 +44,7 @@ export class AuthGuard implements CanActivate {
       const token = this.extractToken(request);
       const payload = this.verifyToken(token);
 
-      // Interceptor will use this to retrieve the user in the request
+      // Guard will use this to retrieve the user in the request
       request.user = payload;
 
       return true;
