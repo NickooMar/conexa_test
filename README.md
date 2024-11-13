@@ -42,6 +42,12 @@ git clone https://github.com/NickooMar/conexa_test.git
 
 Setear las variables de entorno con valores locales - (Las variables se encuentran en los archivos `.env.example` de cada servicio).
 
+### MongoDB
+Es necesario tener MongoDB instalado y en funcionamiento. Este proyecto requiere de 2 (dos) colecciones en la base de datos
+
+`movies`: Para almacenar la información de las películas.
+`users`: Para almacenar la información de los usuarios registrados.
+
 ### API - Gateway
 
 1. Ingresar en la carpeta.
@@ -49,7 +55,7 @@ Setear las variables de entorno con valores locales - (Las variables se encuentr
 cd api-gateway
 ```
 2. Crear un archivo `.env` en la raiz de la carpeta `api-gateway` .
-2. Configurar las variables de entorno en el archivo previamente creado de acuerdo al archivo `.env.example`.
+2. Configurar las variables de entorno en el archivo previamente creado en base a `.env.example`.
 2. Instalar los modulos necesarios.
 ```bash
 npm install
@@ -67,7 +73,7 @@ npm run start:dev
 cd auth-service
 ```
 2. Crear un archivo `.env` en la raiz de la carpeta `auth-service` .
-2. Configurar las variables de entorno en el archivo previamente creado.
+2. Configurar las variables de entorno en el archivo previamente creado en base a `.env.example`.
 2. Instalar los modulos necesarios.
 ```bash
 npm install
@@ -85,7 +91,7 @@ npm run start:dev
 cd client-backend
 ```
 2. Crear un archivo `.env` en la raiz de la carpeta `client-backend` .
-2. Configurar las variables de entorno en el archivo previamente creado.
+2. Configurar las variables de entorno en el archivo previamente creado en base a `.env.example`.
 2. Instalar los modulos necesarios.
 ```bash
 npm install
@@ -214,3 +220,11 @@ npm run start:dev
 
 - [@NickooMar](https://github.com/NickooMar)
 
+
+## Recursos utilizados
+
+[Nestjs](https://nestjs.com/)
+
+[SWAPI](https://swapi.dev/documentation)
+
+[Mongo Compass](https://www.mongodb.com/products/tools/compass)
