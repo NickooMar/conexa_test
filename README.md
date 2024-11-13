@@ -21,7 +21,17 @@ El backend permite gestionar películas de Star Wars e incluye:
     Swagger: Para documentar la API.
     TypeORM: Para la interacción con la base de datos (PostgreSQL).
     Jest: Para las pruebas unitarias.
+## Installation
+
+Install my-project with npm
+
+```bash
+  npm install my-project
+  cd my-project
+```
+    
 ## API Reference
+
 
 #### Post Signup
 
@@ -49,30 +59,52 @@ El backend permite gestionar películas de Star Wars e incluye:
 | `password` | `string` | **Required**. User password |
 
 
-
 #### Get all movies
 
 ```http
-  GET /api/items
+  GET /api/movies
 ```
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
 | `api_key` | `string` | **Required**. Your API key |
 
-#### Get item
+
+#### Get movie
 
 ```http
-  GET /api/items/${id}
+  GET /api/movies/${id}
 ```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
+| `api_key` | `string` | **Required**. Your API key |
 | `id`      | `string` | **Required**. Id of item to fetch |
 
-#### add(num1, num2)
 
-Takes two numbers and returns the sum.
+#### Create movie
+
+```http
+  POST /api/movies
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `api_key` | `string` | **Required**. Your API key |
+| `title`      | `string` | **Required**. Id of item to fetch |
+| `episode_id`      | `number` | The episode number of this film. |
+| `opening_crawl`      | `string` | The opening paragraphs at the beginning of this film. |
+| `director`      | `string` |  The name of the director of this film. |
+| `producer`      | `string` | The name(s) of the producer(s) of this film. Comma separated. |
+| `release_date`      | `string` | The ISO 8601 date format of film release at original creator country. |
+| `species`      | `array` | An array of species resource URLs that are in this film. |
+| `starships`      | `array` | An array of starship resource URLs that are in this film. |
+| `vehicles`      | `array` | An array of vehicle resource URLs that are in this film. |
+| `characters`      | `array` | An array of people resource URLs that are in this film. |
+| `planets`      | `array` |  An array of planet resource URLs that are in this film. |
+| `url`      | `string` | the hypermedia URL of this resource. |
+| `created`      | `string` |  the ISO 8601 date format of the time that this resource was created. |
+| `edited`      | `string` |  the ISO 8601 date format of the time that this resource was edited. |
 
 
 ## Authors
