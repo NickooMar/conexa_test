@@ -21,7 +21,11 @@ export class MoviesService {
 
   async getMovie(id: string) {
     // Find the movie by the episode_id or the mongoose id?
-    return await this.movieModel.findOne({ episode_id: id }).exec();
+    const movie = await this.movieModel.findOne({ episode_id: id }).exec();
+
+    if (!movie) throw new Error('movie_not_found');
+
+    return movie;
   }
 
   async createMovie(movie: CreateMovieRequestDto) {
