@@ -42,8 +42,6 @@ paths:
                   accessToken:
                     type: string
                     example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-        "401":
-          description: "Unauthorized"
         "500":
           description: "Internal server error"
 
@@ -107,6 +105,34 @@ paths:
                   accessToken:
                     type: string
                     example: "eyJhbGciOi"
+        "500":
+          description: "Internal server error"
+
+  /api/auth/refresh:
+    post:
+      tags:
+        - Authentication
+      summary: "Refresh a user token"
+      description: "Refresh the user token for when properties are updated"
+      operation: "refresh"
+      headers:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: "Bearer <token>"
+      responses:
+        "200":
+          description: "Token refreshed"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                    example: "eyJhbGciOi..."
         "401":
           description: "Unauthorized"
         "500":
