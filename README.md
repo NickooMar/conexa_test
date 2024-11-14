@@ -19,7 +19,7 @@ El backend permite gestionar películas de Star Wars e incluye:
     NestJS: Framework para Node.js.
     JWT: Para autenticación y autorización.
     Swagger: Para documentar la API.
-    MOngoose: Para la interacción con la base de datos (MongoDB).
+    TypeORM: Para la interacción con la base de datos (PostgreSQL).
     Jest: Para las pruebas unitarias.
 ## Guía de instalación
 
@@ -133,6 +133,18 @@ La documentación de la API del proyecto se genera con Swagger y se puede encont
 | `email` | `string` | **Required** - **Unique**. User email |
 | `password` | `string` | **Required**. User password |
 
+#### Get Refresh token
+
+```http
+  POST /api/auth/refresh
+```
+
+Nota: Es importante llamar al refresh token luego de hacer ajustes en los roles del usuario ya que el rol se obtiene directamente del payload del token generado por JSON Web Token, por ende debemos actualizar el token cuando las propiedades de ese token cambien.
+
+| Header | Type        | Description                |
+| :-------- | :------- | :------------------------- |
+| `Authorization` | `string` | **Required**. Your Bearer token |
+
 
 #### Get all movies
 
@@ -140,9 +152,9 @@ La documentación de la API del proyecto se genera con Swagger y se puede encont
   GET /api/movies
 ```
 
-| Parameter | Type     | Description                |
+| Header | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `api_key` | `string` | **Required**. Your API key |
+| `Authorization` | `string` | **Required**. Your Bearer token |
 
 
 #### Get movie
@@ -150,10 +162,12 @@ La documentación de la API del proyecto se genera con Swagger y se puede encont
 ```http
   GET /api/movies/${id}
 ```
+| Header | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Authorization` | `string` | **Required**. Your Bearer token |
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `api_key` | `string` | **Required**. Your API key |
 | `id`      | `string` | **Required**. Id of item to fetch |
 
 
@@ -163,9 +177,12 @@ La documentación de la API del proyecto se genera con Swagger y se puede encont
   POST /api/movies
 ```
 
+| Header | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Authorization` | `string` | **Required**. Your Bearer token |
+
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `api_key` | `string` | **Required**. Your API key |
 | `title`      | `string` | **Required**. Title to create |
 | `episode_id`      | `number` | The episode number of this film. |
 | `opening_crawl`      | `string` | The opening paragraphs at the beginning of this film. |
@@ -188,9 +205,12 @@ La documentación de la API del proyecto se genera con Swagger y se puede encont
   PATCH /api/movies
 ```
 
+| Header | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Authorization` | `string` | **Required**. Your Bearer token |
+
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `api_key` | `string` | **Required**. Your API key |
 | `id` | `string` | **Required**. Id of the item to fetch |
 | `title`      | `string` | Title to update |
 | `episode_id`      | `number` | The episode number of this film. |
@@ -214,9 +234,12 @@ La documentación de la API del proyecto se genera con Swagger y se puede encont
   DELETE /api/movies
 ```
 
+| Header | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `Authorization` | `string` | **Required**. Your Bearer token |
+
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `api_key` | `string` | **Required**. Your API key |
 | `id` | `string` | **Required**. Id of the item to fetch |
 
 ## Autor
