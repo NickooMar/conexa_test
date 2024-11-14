@@ -70,9 +70,9 @@ export class AuthService {
 
     return {
       role: newUser.role,
-      userId: newUser._id.toString(),
       userEmail: newUser.email,
       username: newUser.username,
+      userId: newUser._id.toString(),
       accessToken: await this.jwtService.signAsync(jwtPayload),
     };
   }
