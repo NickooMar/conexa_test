@@ -1,10 +1,10 @@
-import { Controller, UseFilters } from '@nestjs/common';
-import { MessagePattern, Payload, RpcException } from '@nestjs/microservices';
+import { AsyncApiSub } from 'nestjs-asyncapi';
 import { AuthService } from './auth.service';
 import { SigninRequestDto } from './dto/signin.dto';
 import { SignupRequestDto } from './dto/signup.dto';
+import { Controller, UseFilters } from '@nestjs/common';
 import { ExceptionFilter } from '../../exceptions/rpc-exception.filter';
-import { AsyncApiSub } from 'nestjs-asyncapi';
+import { MessagePattern, Payload, RpcException } from '@nestjs/microservices';
 
 @Controller()
 export class AuthController {
@@ -41,6 +41,17 @@ export class AuthController {
   async handleSignup(@Payload() data: SignupRequestDto) {
     try {
       return await this.authService.signup(data);
+    } catch (error) {
+      throw new RpcException(error.message);
+    }
+  }
+
+  @MessagePattern({ cmd: 'refreshToken' })
+  @UseFilters(new ExceptionFilter())
+  async refreshToken(@Payload() userId: string) {
+    try {
+      const newToken = await this.authService.refreshToken(userId);
+      return newToken;
     } catch (error) {
       throw new RpcException(error.message);
     }

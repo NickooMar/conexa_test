@@ -11,9 +11,9 @@ class Config {
   get mongooseConfig() {
     return {
       host: this.getEnv('MONGO_HOST'),
-      port: parseInt(this.getEnv('MONGO_PORT')),
       database: this.getEnv('MONGO_DATABASE'),
       ssl: this.getEnv('MONGO_SSL') === 'true',
+      port: parseInt(this.getEnv('MONGO_PORT')),
     };
   }
 

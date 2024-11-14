@@ -35,9 +35,7 @@ export class AuthService {
       username: user.username,
     };
 
-    return {
-      accessToken: await this.jwtService.signAsync(jwtPayload),
-    };
+    return { accessToken: await this.jwtService.signAsync(jwtPayload) };
   }
 
   async signup(user: SignupRequestDto): Promise<SignupResponseDto> {
@@ -77,5 +75,20 @@ export class AuthService {
       username: newUser.username,
       accessToken: await this.jwtService.signAsync(jwtPayload),
     };
+  }
+
+  async refreshToken(userId: string) {
+    const user = await this.userModel.findById(userId).exec();
+
+    if (!user) throw new RpcException('user_not_found');
+
+    const jwtPayload = {
+      sub: user._id,
+      role: user.role,
+      email: user.email,
+      username: user.username,
+    };
+
+    return { accessToken: await this.jwtService.signAsync(jwtPayload) };
   }
 }

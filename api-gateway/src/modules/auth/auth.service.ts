@@ -19,14 +19,16 @@ export class AuthService {
   }
 
   async signup(body: SignupRequestDto) {
-    try {
-      const pattern = { cmd: 'signup' };
-      const response$ = this.authServiceClient.send(pattern, body);
-      const result = await lastValueFrom(response$);
-      return result;
-    } catch (error) {
-      console.error(error);
-      throw new Error(error.message);
-    }
+    const pattern = { cmd: 'signup' };
+    const response$ = this.authServiceClient.send(pattern, body);
+    const result = await lastValueFrom(response$);
+    return result;
+  }
+
+  async refreshToken(userId: string) {
+    const pattern = { cmd: 'refreshToken' };
+    const response$ = this.authServiceClient.send(pattern, userId);
+    const result = await lastValueFrom(response$);
+    return result;
   }
 }
