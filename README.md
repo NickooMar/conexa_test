@@ -19,7 +19,7 @@ El backend permite gestionar películas de Star Wars e incluye:
     NestJS: Framework para Node.js.
     JWT: Para autenticación y autorización.
     Swagger: Para documentar la API.
-    TypeORM: Para la interacción con la base de datos (PostgreSQL).
+    Mongoose: Para la interacción con la base de datos (MongoDB).
     Jest: Para las pruebas unitarias.
 ## Guía de instalación
 
