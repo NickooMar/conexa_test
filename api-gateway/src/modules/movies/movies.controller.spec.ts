@@ -3,7 +3,8 @@
 // import { MoviesService } from './movies.service';
 
 // describe('MoviesController', () => {
-//   let controller: MoviesController;
+//   let moviesController: MoviesController;
+//   let moviesService: MoviesService;
 
 //   beforeEach(async () => {
 //     const module: TestingModule = await Test.createTestingModule({
@@ -11,10 +12,10 @@
 //       providers: [MoviesService],
 //     }).compile();
 
-//     controller = module.get<MoviesController>(MoviesController);
+//     moviesController = module.get<MoviesController>(MoviesController);
 //   });
 
 //   it('should be defined', () => {
-//     expect(controller).toBeDefined();
+//     expect(moviesController).toBeDefined();
 //   });
 // });

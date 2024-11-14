@@ -5,7 +5,7 @@ import { SigninRequestDto } from 'src/modules/auth/dto/signin.dto';
 import { SignupRequestDto } from 'src/modules/auth/dto/signup.dto';
 import { HttpStatus, INestApplication, ValidationPipe } from '@nestjs/common';
 
-describe('AuthController (e2e)', () => {
+describe('Authentication (e2e)', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
