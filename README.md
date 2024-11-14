@@ -181,7 +181,7 @@ Nota: Es importante llamar al refresh token luego de hacer ajustes en los roles 
 | :-------- | :------- | :-------------------------------- |
 | `Authorization` | `string` | **Required**. Your Bearer token |
 
-| Parameter | Type     | Description                       |
+| Body | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `title`      | `string` | **Required**. Title to create |
 | `episode_id`      | `number` | The episode number of this film. |
@@ -202,7 +202,7 @@ Nota: Es importante llamar al refresh token luego de hacer ajustes en los roles 
 #### Update movie
 
 ```http
-  PATCH /api/movies
+  PATCH /api/movies/:id
 ```
 
 | Header | Type     | Description                       |
@@ -212,6 +212,9 @@ Nota: Es importante llamar al refresh token luego de hacer ajustes en los roles 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `id` | `string` | **Required**. Id of the item to fetch |
+
+| Body | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
 | `title`      | `string` | Title to update |
 | `episode_id`      | `number` | The episode number of this film. |
 | `opening_crawl`      | `string` | The opening paragraphs at the beginning of this film. |
@@ -227,11 +230,10 @@ Nota: Es importante llamar al refresh token luego de hacer ajustes en los roles 
 | `created`      | `string` |  the ISO 8601 date format of the time that this resource was created. |
 | `edited`      | `string` |  the ISO 8601 date format of the time that this resource was edited. |
 
-
 #### Delete movie
 
 ```http
-  DELETE /api/movies
+  DELETE /api/movies/:id
 ```
 
 | Header | Type     | Description                       |
