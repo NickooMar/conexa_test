@@ -202,7 +202,7 @@ Nota: Es importante llamar al refresh token luego de hacer ajustes en los roles 
 #### Update movie
 
 ```http
-  PATCH /api/movies/:id
+  PATCH /api/movies/${id}
 ```
 
 | Header | Type     | Description                       |
@@ -233,7 +233,7 @@ Nota: Es importante llamar al refresh token luego de hacer ajustes en los roles 
 #### Delete movie
 
 ```http
-  DELETE /api/movies/:id
+  DELETE /api/movies/${id}
 ```
 
 | Header | Type     | Description                       |
