@@ -1,5 +1,7 @@
 version: "3.8"
 
+#
+
 services:
   mongodb:
     image: mongo:latest
@@ -9,8 +11,8 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: 12345678
       MONGO_INITDB_DATABASE: conexa
     command:
-      - '--logpath'
-      - '/var/log/mongodb/mongod.log'
+      - "--logpath"
+      - "/var/log/mongodb/mongod.log"
     ports:
       - 27017:27017
     volumes:
@@ -22,41 +24,104 @@ services:
       context: ./api-gateway
       dockerfile: Dockerfile
       args:
-        - SERVICE_NAME=api-gateway
+        - NODE_ENV=development
         - PORT=3000
+        - JWT_SECRET=secret
+        - JWT_EXPIRES_IN=1d
+        - AUTH_SERVICE_HOST=localhost
+        - AUTH_SERVICE_PORT=3001
+        - CLIENT_BACKEND_HOST=localhost
+        - CLIENT_BACKEND_TCP_PORT=3002
+        - MONGO_HOST=localhost
+        - MONGO_PORT=27017
+        - MONGO_DATABASE=conexa
+        - MONGO_DB=conexa
+        - MONGO_SSL=false
     depends_on:
       - mongodb
     ports:
       - "3000:3000"
-    environment:
-      - PORT=3000
+    # environment:
+    #   - NODE_ENV=${NODE_ENV}
+    #   - PORT=${PORT}
+    #   - JWT_SECRET=${JWT_SECRET}
+    #   - JWT_EXPIRES_IN=${JWT_EXPIRES_IN}
+    #   - AUTH_SERVICE_HOST=${AUTH_SERVICE_HOST}
+    #   - AUTH_SERVICE_PORT=${AUTH_SERVICE_PORT}
+    #   - CLIENT_BACKEND_HOST=${CLIENT_BACKEND_HOST}
+    #   - CLIENT_BACKEND_TCP_PORT=${CLIENT_BACKEND_TCP_PORT}
+    #   - MONGO_HOST=${MONGO_HOST}
+    #   - MONGO_PORT=${MONGO_PORT}
+    #   - MONGO_DATABASE=${MONGO_DATABASE}
+    #   - MONGO_DB=${MONGO_DB}
+    #   - MONGO_SSL=${MONGO_SSL}
 
   client-backend:
     build:
       context: ./client-backend
       dockerfile: Dockerfile
       args:
-        - SERVICE_NAME=client-backend
+        - NODE_ENV=development
         - CLIENT_BACKEND_TCP_PORT=3002
         - CLIENT_BACKEND_HTTP_PORT=3003
+        - CLIENT_BACKEND_HOST=localhost
+        - JWT_SECRET=secret
+        - JWT_EXPIRES_IN=1d
+        - MONGO_HOST=localhost
+        - MONGO_PORT=27017
+        - MONGO_DATABASE=conexa
+        - MONGO_DB=conexa
+        - MONGO_SSL=false
     depends_on:
       - mongodb
     ports:
       - "3003:3003"
-    environment:
-        - CLIENT_BACKEND_TCP_PORT=3002
-        - CLIENT_BACKEND_HTTP_PORT=3003
+    # environment:
+    #   - NODE_ENV=${NODE_ENV}
+    #   - CLIENT_BACKEND_TCP_PORT=${CLIENT_BACKEND_TCP_PORT}
+    #   - CLIENT_BACKEND_HTTP_PORT=${CLIENT_BACKEND_HTTP_PORT}
+    #   - CLIENT_BACKEND_HOST=${CLIENT_BACKEND_HOST}
+    #   - JWT_SECRET=${JWT_SECRET}
+    #   - JWT_EXPIRES_IN=${JWT_EXPIRES_IN}
+    #   - MONGO_HOST=${MONGO_HOST}
+    #   - MONGO_PORT=${MONGO_PORT}
+    #   - MONGO_DATABASE=${MONGO_DATABASE}
+    #   - MONGO_DB=${MONGO_DB}
+    #   - MONGO_SSL=${MONGO_SSL}
 
   auth:
     build:
       context: ./auth-service
       dockerfile: Dockerfile
       args:
+        - NODE_ENV=development
         - SERVICE_NAME=auth-service
-        - PORT=3001
-    depends_on:
-      - mongodb
+        - AUTH_SERVICE_PORT=3001
+        - AUTH_SERVICE_HOST=localhost
+        - JWT_SECRET=secret
+        - JWT_EXPIRES_IN=1d
+        - API_GATEWAY_SERVICE_HOST=localhost
+        - API_GATEWAY_SERVICE_PORT=3000
+        - MONGO_HOST=localhost
+        - MONGO_PORT=27017
+        - MONGO_DATABASE=conexa
+        - MONGO_DB=conexa
+        - MONGO_SSL=false
     ports:
       - "3001:3001"
-    environment:
-      - PORT=3001
+    depends_on:
+      - mongodb
+    # environment:
+    #   - NODE_ENV=${NODE_ENV}
+    #   - SERVICE_NAME=${SERVICE_NAME}
+    #   - AUTH_SERVICE_PORT=${AUTH_SERVICE_PORT}
+    #   - AUTH_SERVICE_HOST=${AUTH_SERVICE_HOST}
+    #   - JWT_SECRET=${JWT_SECRET}
+    #   - JWT_EXPIRES_IN=${JWT_EXPIRES_IN}
+    #   - API_GATEWAY_SERVICE_HOST=${API_GATEWAY_SERVICE_HOST}
+    #   - API_GATEWAY_SERVICE_PORT=${API_GATEWAY_SERVICE_PORT}
+    #   - MONGO_HOST=${MONGO_HOST}
+    #   - MONGO_PORT=${MONGO_PORT}
+    #   - MONGO_DATABASE=${MONGO_DATABASE}
+    #   - MONGO_DB=${MONGO_DB}
+    #   - MONGO_SSL=${MONGO_SSL}
