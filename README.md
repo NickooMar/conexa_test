@@ -42,6 +42,15 @@ git clone https://github.com/NickooMar/conexa_test.git
 
 Setear las variables de entorno con valores locales - (Las variables se encuentran en los archivos `.env.example` de cada servicio).
 
+### Docker
+Para una inicialización más rápida y sencilla del proyecto, puedes utilizar el archivo `docker-compose.yaml`. Este archivo define todos los servicios de tu aplicación y sus relaciones. Los pasos para ejecutarlo son los siguientes:
+
+- Ubica la raíz del proyecto: Navega a la carpeta `conexa_test`.
+- Ejecuta el comando: Escribe en tu terminal `docker-compose up --build`.
+
+Este comando construirá las imágenes de Docker para cada servicio (si es necesario) y luego iniciará todos los contenedores.
+
+
 ### MongoDB
 Es necesario tener MongoDB instalado y en funcionamiento. Este proyecto requiere de 2 (dos) colecciones en la base de datos
 
@@ -101,8 +110,6 @@ npm install
 ```bash
 npm run start:dev
 ```
-
-    
 ## API Reference
 
 La documentación de la API del proyecto se genera con Swagger y se puede encontrar en la carpeta `api-gateway` en la ruta `/api-docs`. Esta documentación utiliza un archivo swagger.yaml que define los endpoints, esquemas y otros detalles importantes de la API.
@@ -202,7 +209,7 @@ Nota: Es importante llamar al refresh token luego de hacer ajustes en los roles 
 #### Update movie
 
 ```http
-  PATCH /api/movies/${id}
+  PATCH /api/movies/:id
 ```
 
 | Header | Type     | Description                       |
@@ -233,7 +240,7 @@ Nota: Es importante llamar al refresh token luego de hacer ajustes en los roles 
 #### Delete movie
 
 ```http
-  DELETE /api/movies/${id}
+  DELETE /api/movies/:id
 ```
 
 | Header | Type     | Description                       |
