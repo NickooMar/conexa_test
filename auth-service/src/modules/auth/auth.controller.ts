@@ -3,7 +3,7 @@ import { MessagePattern, Payload, RpcException } from '@nestjs/microservices';
 import { AuthService } from './auth.service';
 import { SigninRequestDto } from './dto/signin.dto';
 import { SignupRequestDto } from './dto/signup.dto';
-import { ExceptionFilter } from 'src/exceptions/rpc-exception.filter';
+import { ExceptionFilter } from '../../exceptions/rpc-exception.filter';
 import { AsyncApiSub } from 'nestjs-asyncapi';
 
 @Controller()

@@ -1,12 +1,12 @@
 import * as bcrypt from 'bcrypt';
 import { Model } from 'mongoose';
-import { config } from 'src/config';
-import { InjectModel } from '@nestjs/mongoose';
-import { SignupRequestDto } from './dto/signup.dto';
-import { SigninRequestDto } from './dto/signin.dto';
-import { User } from 'src/modules/auth/schemas/user.schema';
-import { RpcException } from '@nestjs/microservices';
+import { config } from '../../config';
 import { JwtService } from '@nestjs/jwt';
+import { InjectModel } from '@nestjs/mongoose';
+import { SignupRequestDto, SignupResponseDto } from './dto/signup.dto';
+import { SigninRequestDto } from './dto/signin.dto';
+import { RpcException } from '@nestjs/microservices';
+import { User } from '../../modules/auth/schemas/user.schema';
 
 const { mongooseConfig } = config;
 
@@ -40,7 +40,7 @@ export class AuthService {
     };
   }
 
-  async signup(user: SignupRequestDto): Promise<any> {
+  async signup(user: SignupRequestDto): Promise<SignupResponseDto> {
     const [email, username] = [
       user.email.toLowerCase(),
       user.username.toLowerCase(),
@@ -56,13 +56,12 @@ export class AuthService {
 
     const hashedPassword = await bcrypt.hash(user.password, 10);
 
-    const newUser = new this.userModel({
+    const newUser = await this.userModel.create({
       ...user,
       email,
       username,
       password: hashedPassword,
     });
-    await newUser.save();
 
     const jwtPayload = {
       sub: newUser._id,
@@ -73,7 +72,7 @@ export class AuthService {
 
     return {
       role: newUser.role,
-      userId: newUser._id,
+      userId: newUser._id.toString(),
       userEmail: newUser.email,
       username: newUser.username,
       accessToken: await this.jwtService.signAsync(jwtPayload),

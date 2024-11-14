@@ -1,37 +1,18 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { HttpStatus, INestApplication, ValidationPipe } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../../src/app.module';
+import { Test, TestingModule } from '@nestjs/testing';
 import { SigninRequestDto } from 'src/modules/auth/dto/signin.dto';
 import { SignupRequestDto } from 'src/modules/auth/dto/signup.dto';
-import { getModelToken } from '@nestjs/mongoose';
-import { User } from '../../src/modules/auth/schemas/user.schema';
-import { config } from '../../src/config';
-import { Model } from 'mongoose';
-
-const { mongooseConfig } = config;
+import { HttpStatus, INestApplication, ValidationPipe } from '@nestjs/common';
 
 describe('AuthController (e2e)', () => {
   let app: INestApplication;
-  const userDoc = getModelToken(User.name, mongooseConfig.database);
-
-  let userModel = Model<User>;
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-      providers: [
-        {
-          provide: userDoc,
-          useValue: {
-            findOne: jest.fn(),
-            create: jest.fn(),
-          },
-        },
-      ],
+      providers: [],
     }).compile();
-
-    userModel = moduleFixture.get<Model<User>>(userDoc);
 
     app = moduleFixture.createNestApplication();
     app.setGlobalPrefix('api');
@@ -39,13 +20,8 @@ describe('AuthController (e2e)', () => {
     await app.init();
   });
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
   it('should be defined', () => {
     expect(app).toBeDefined();
-    expect(userModel).toBeDefined();
   });
 
   describe('Signin', () => {

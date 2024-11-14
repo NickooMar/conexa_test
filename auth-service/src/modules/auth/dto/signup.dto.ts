@@ -9,6 +9,7 @@ import {
   ValidatorConstraintInterface,
   IsEmail,
 } from 'class-validator';
+import { UserRole } from '../schemas/user.schema';
 
 @ValidatorConstraint({ name: 'CustomMatchPasswords', async: false })
 export class CustomMatchPasswords implements ValidatorConstraintInterface {
@@ -48,4 +49,12 @@ export class SignupRequestDto {
   @MaxLength(20)
   @Validate(CustomMatchPasswords, ['password'])
   confirmPassword: string;
+}
+
+export class SignupResponseDto {
+  role: UserRole;
+  userId: string;
+  username: string;
+  userEmail: string;
+  accessToken: string;
 }

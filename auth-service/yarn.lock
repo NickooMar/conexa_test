@@ -1846,12 +1846,12 @@
     boxen "5.1.2"
     check-disk-space "3.4.0"
 
-"@nestjs/testing@^10.0.0":
-  version "10.4.1"
-  resolved "https://registry.npmjs.org/@nestjs/testing/-/testing-10.4.1.tgz"
-  integrity sha512-pR+su5+YGqCLH0RhhVkPowQK7FCORU0/PWAywPK7LScAOtD67ZoviZ7hAU4vnGdwkg4HCB0D7W8Bkg19CGU8Xw==
+"@nestjs/testing@^10.4.7":
+  version "10.4.7"
+  resolved "https://registry.npmjs.org/@nestjs/testing/-/testing-10.4.7.tgz"
+  integrity sha512-aS3sQ0v4g8cyHDzW3xJv1+8MiFAkxUNXmnau588IFFI/nBIo/kevLNHNPr85keYekkJ/lwNDW72h8UGg8BYd9w==
   dependencies:
-    tslib "2.6.3"
+    tslib "2.7.0"
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -8919,6 +8919,11 @@ tslib@^2.2.0, tslib@^2.3.0, tslib@^2.3.1, tslib@^2.6.0, tslib@2.6.3:
   integrity sha512-xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ==
 
 tslib@^2.6.2:
+  version "2.7.0"
+  resolved "https://registry.npmjs.org/tslib/-/tslib-2.7.0.tgz"
+  integrity sha512-gLXCKdN1/j47AiHiOkJN69hJmcbGTHI0ImLmbYLHykhgeN0jVGola9yVjFgzCUklsZQMW55o+dW7IXv3RCXDzA==
+
+tslib@2.7.0:
   version "2.7.0"
   resolved "https://registry.npmjs.org/tslib/-/tslib-2.7.0.tgz"
   integrity sha512-gLXCKdN1/j47AiHiOkJN69hJmcbGTHI0ImLmbYLHykhgeN0jVGola9yVjFgzCUklsZQMW55o+dW7IXv3RCXDzA==

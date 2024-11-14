@@ -1,9 +1,9 @@
+import { config } from '../../config';
 import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from 'src/modules/auth/schemas/user.schema';
-import { config } from 'src/config';
+import { User, UserSchema } from '../../modules/auth/schemas/user.schema';
 
 const { mongooseConfig } = config;
 
