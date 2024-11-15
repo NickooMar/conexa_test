@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Movie } from './schemas/movie.schema';
-import { config } from 'src/config';
+import { config } from '../../config';
 import { Model } from 'mongoose';
 import { CreateMovieRequestDto } from './dto/create-movie.dto';
 import { UpdateMovieRequestDto } from './dto/update-movie.dto';
@@ -29,8 +29,15 @@ export class MoviesService {
   }
 
   async createMovie(movie: CreateMovieRequestDto) {
-    const newMovie = new this.movieModel(movie);
-    return await newMovie.save();
+    const foundMovie = await this.movieModel
+      .findOne({
+        $or: [{ episode_id: movie.episode_id }, { title: movie.title }],
+      })
+      .exec();
+
+    if (foundMovie) throw new Error('movie_already_exists');
+
+    return await this.movieModel.create(movie);
   }
 
   async updateMovie(payload: UpdateMovieRequestDto & { id: string }) {

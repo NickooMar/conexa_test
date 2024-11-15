@@ -1,7 +1,7 @@
 import { Controller, Inject, UseFilters } from '@nestjs/common';
 import { MoviesService } from './movies.service';
 import { MessagePattern, Payload, RpcException } from '@nestjs/microservices';
-import { ExceptionFilter } from 'src/exceptions/rpc-exception.filter';
+import { ExceptionFilter } from '../../exceptions/rpc-exception.filter';
 import { Cache, CACHE_MANAGER } from '@nestjs/cache-manager';
 import { GetMoviesRequestDto } from './dto/get-movies.dto';
 import { GetMovieRequestDto } from './dto/get-movie.dto';

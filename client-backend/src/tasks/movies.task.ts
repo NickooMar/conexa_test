@@ -1,12 +1,12 @@
 // src/sync/sync.service.ts
+import axios from 'axios';
+import { Model } from 'mongoose';
+import { config } from '../config';
+import { InjectModel } from '@nestjs/mongoose';
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import axios from 'axios';
-import { Movie } from 'src/modules/movies/schemas/movie.schema';
-import { config } from 'src/config';
-import { SWAPIMoviesResponse } from 'src/modules/movies/types/movies.types';
+import { Movie } from '../modules/movies/schemas/movie.schema';
+import { SWAPIMoviesResponse } from '../modules/movies/types/movies.types';
 
 const { mongooseConfig } = config;
 

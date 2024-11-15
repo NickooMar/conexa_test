@@ -1,5 +1,5 @@
 import { MongooseModule } from '@nestjs/mongoose';
-import { config } from 'src/config';
+import { config } from '../../config';
 
 const { host, port, database, ssl } = config.mongooseConfig;
 
