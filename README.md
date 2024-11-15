@@ -143,7 +143,7 @@ La documentación de la API del proyecto se genera con Swagger y se puede encont
 #### Get Refresh token
 
 ```http
-  POST /api/auth/refresh
+  GET /api/auth/refresh
 ```
 
 Nota: Es importante llamar al refresh token luego de hacer ajustes en los roles del usuario ya que el rol se obtiene directamente del payload del token generado por JSON Web Token, por ende debemos actualizar el token cuando las propiedades de ese token cambien.
