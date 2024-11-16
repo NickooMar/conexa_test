@@ -114,6 +114,8 @@ npm run start:dev
 
 La documentación de la API del proyecto se genera con Swagger y se puede encontrar en la carpeta `api-gateway` en la ruta `/api-docs`. Esta documentación utiliza un archivo swagger.yaml que define los endpoints, esquemas y otros detalles importantes de la API.
 
+También es posible acceder a la documentación de la API mediante Postman con el siguiente link:
+[POSTMAN](https://app.getpostman.com/join-team?invite_code=cdab49a1aa6001462da0ab11951f3481&target_code=e26a59b3165c180a73f9089da39cdfc8)
 
 #### Post Signup
 
