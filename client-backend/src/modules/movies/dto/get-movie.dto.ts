@@ -1,4 +1,5 @@
 import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { GetMoviesResponseDto } from './get-movies.dto';
 
 export class GetMovieRequestDto {
   @IsString()
@@ -9,3 +10,5 @@ export class GetMovieRequestDto {
   @IsBoolean()
   revalidate?: boolean;
 }
+
+export interface GetMovieResponseDto extends GetMoviesResponseDto {}

@@ -46,6 +46,12 @@ export class Movie extends Document {
 
   @Prop({ required: true })
   url: string;
+
+  @Prop({ required: true, default: Date.now })
+  createdAt: Date;
+
+  @Prop({ required: true, default: Date.now })
+  updatedAt: Date;
 }
 
 export const MovieSchema = SchemaFactory.createForClass(Movie);

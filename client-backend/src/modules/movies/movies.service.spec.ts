@@ -30,10 +30,14 @@ describe('MoviesService', () => {
           provide: movieDoc,
           useValue: {
             find: jest.fn().mockReturnValue({
-              exec: jest.fn().mockResolvedValue([]),
+              lean: jest.fn().mockReturnValue({
+                exec: jest.fn().mockResolvedValue([]),
+              }),
             }),
             findOne: jest.fn().mockReturnValue({
-              exec: jest.fn().mockResolvedValue({}),
+              lean: jest.fn().mockReturnValue({
+                exec: jest.fn().mockResolvedValue({}),
+              }),
             }),
             create: jest.fn().mockResolvedValue({ _id: '1', ...mockMovie }),
             findOneAndUpdate: jest
@@ -65,7 +69,9 @@ describe('MoviesService', () => {
 
   it('should create a movie', async () => {
     (movieModel.findOne as jest.Mock).mockReturnValue({
-      exec: jest.fn().mockResolvedValue(null),
+      lean: jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue(null),
+      }),
     });
 
     const createdMovie = await service.createMovie(mockMovie);
@@ -86,7 +92,9 @@ describe('MoviesService', () => {
     };
 
     (movieModel.findOne as jest.Mock).mockReturnValue({
-      exec: jest.fn().mockResolvedValue(mockMovie),
+      lean: jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue(mockMovie),
+      }),
     });
 
     const updatedMovie = await service.updateMovie({
@@ -101,7 +109,9 @@ describe('MoviesService', () => {
     const movieId = '4';
 
     (movieModel.findOne as jest.Mock).mockReturnValue({
-      exec: jest.fn().mockResolvedValue({ id: movieId }),
+      lean: jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue({ id: movieId }),
+      }),
     });
 
     // Mock findOneAndDelete to simulate the deletion

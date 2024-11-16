@@ -32,6 +32,7 @@ describe('AuthService', () => {
           provide: userDoc,
           useValue: {
             exec: jest.fn().mockResolvedValue(null),
+            lean: jest.fn(),
             save: jest.fn(),
             create: jest.fn(),
             findOne: jest.fn(),
@@ -68,7 +69,9 @@ describe('AuthService', () => {
 
       // Mock findOne to return the mock user
       (userModel.findOne as jest.Mock).mockReturnValue({
-        exec: jest.fn().mockResolvedValue(mockUser),
+        lean: jest.fn().mockReturnValue({
+          exec: jest.fn().mockResolvedValue(mockUser),
+        }),
       });
 
       const response = await authService.singin(body);
@@ -93,7 +96,11 @@ describe('AuthService', () => {
       };
 
       // Mock findOne to return null (indicating user does not already exist)
-      (userModel.findOne as jest.Mock).mockReturnValue(userModel);
+      (userModel.findOne as jest.Mock).mockReturnValue({
+        lean: jest.fn().mockReturnValue({
+          exec: jest.fn().mockResolvedValue(null),
+        }),
+      });
 
       // Mock save method to simulate saving the new user
       const mockUser = {

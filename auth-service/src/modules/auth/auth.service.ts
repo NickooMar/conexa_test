@@ -20,7 +20,7 @@ export class AuthService {
   async singin(payload: SigninRequestDto) {
     const { email, password } = payload;
 
-    const user = await this.userModel.findOne({ email }).exec();
+    const user = await this.userModel.findOne({ email }).lean().exec();
 
     if (!user) throw new RpcException('invalid_credentials');
 
@@ -48,6 +48,7 @@ export class AuthService {
       .findOne({
         $or: [{ email }, { username }],
       })
+      .lean()
       .exec();
 
     if (existingUser) throw new RpcException('user_already_exists');
@@ -78,7 +79,7 @@ export class AuthService {
   }
 
   async refreshToken(userId: string) {
-    const user = await this.userModel.findById(userId).exec();
+    const user = await this.userModel.findById(userId).lean().exec();
 
     if (!user) throw new RpcException('user_not_found');
 
